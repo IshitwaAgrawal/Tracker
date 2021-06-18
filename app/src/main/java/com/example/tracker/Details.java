@@ -40,6 +40,7 @@ public class Details extends AppCompatActivity {
     public String s;
     private double latitude;
     private double longitude;
+    private boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
