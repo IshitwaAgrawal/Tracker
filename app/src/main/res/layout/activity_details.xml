@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name1" />
 
     <Button
-        android:id="@+id/Save"
+        android:id="@+id/Save_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"

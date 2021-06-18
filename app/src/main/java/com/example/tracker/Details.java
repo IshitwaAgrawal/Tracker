@@ -13,17 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -31,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Details extends AppCompatActivity {
     private EditText n, e, num;
@@ -40,6 +39,7 @@ public class Details extends AppCompatActivity {
     public String s;
     private double latitude;
     private double longitude;
+    private boolean isGPSEnabled = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class Details extends AppCompatActivity {
         e = findViewById(R.id.email1);
         num = findViewById(R.id.num1);
         progressBar = findViewById(R.id.progressBar2);
-        submit = findViewById(R.id.Save);
+        submit = findViewById(R.id.Save_details);
         mAuth = FirebaseAuth.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +65,8 @@ public class Details extends AppCompatActivity {
                 getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.d("LOCATION","Location permission not enabled!");
+            isGPSEnabled = false;
+            showToast("Location not Enabled!!");
             return;
         }
         Location locationGPS = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -79,13 +81,17 @@ public class Details extends AppCompatActivity {
             NetLocationTime = locationNet.getTime();
         }
 
-        if ( 0 < GPSLocationTime - NetLocationTime ) {
-            this.latitude = locationGPS.getLatitude();
-            this.longitude = locationGPS.getLongitude();
-        }
-        else {
-            this.latitude = locationNet.getLatitude();
-            this.longitude = locationNet.getLongitude();
+        try {
+            if (0 < GPSLocationTime - NetLocationTime) {
+                this.latitude = locationGPS.getLatitude();
+                this.longitude = locationGPS.getLongitude();
+            } else {
+                this.latitude = locationNet.getLatitude();
+                this.longitude = locationNet.getLongitude();
+            }
+        }catch(Exception e){
+            isGPSEnabled = false;
+            showToast("Location not Enabled!!");
         }
     }
 
@@ -126,53 +132,63 @@ public class Details extends AppCompatActivity {
             n.setError("Required");
             n.requestFocus();
         } else {
-            progressBar.setVisibility(View.VISIBLE);
-            String uid = mAuth.getCurrentUser().getUid().toString();
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            Map<String, Object> mp = new HashMap<>();
-            mp.put("id", uid);
-            mp.put("name", name);
-            mp.put("email", email);
-            mp.put("phone", Phone);
-            mp.put("disabled", false);
-            mp.put("timestamp", FieldValue.serverTimestamp());
-            db.collection("users").document(uid).set(mp)
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull @NotNull Exception e) {
-                            Log.d("FAILURE",e.getMessage());
-                        }
-                    })
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Log.d("SUCCESS","Document written....");
-                            updateLocation(uid,db);
-                        }
-                    }
-                );
-
-            }
-        }
-        public void updateLocation(String uid,FirebaseFirestore db){
-            Map<String,Object> location = new HashMap<>();
-            location.put("latitude",latitude);
-            location.put("longitude",longitude);
-            db.collection("/location").document(uid).set(location)
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull @NotNull Exception e) {
-                        Log.d("FAILURE",e.getMessage());
-                    }
-                })
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        progressBar.setVisibility(View.GONE);
-                        moveToHome();
-                        Log.d("SUCCESS","Location uploaded...");
-                    }
-                }
-            );
+            if(isGPSEnabled)
+                updateUserProfile(name,email,Phone);
         }
     }
+    public void updateUserProfile(String name,String email,String Phone){
+        progressBar.setVisibility(View.VISIBLE);
+        String uid;
+        if(mAuth.getCurrentUser()!=null)
+            uid = mAuth.getCurrentUser().getUid().toString();
+        else
+            uid = UUID.randomUUID().toString();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> mp = new HashMap<>();
+        mp.put("id", uid);
+        mp.put("name", name);
+        mp.put("email", email);
+        mp.put("phone", Phone);
+        mp.put("disabled", false);
+        mp.put("timestamp", FieldValue.serverTimestamp());
+        db.collection("users").document(uid).set(mp)
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Log.d("FAILURE",e.getMessage());
+                }
+            })
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                  @Override
+                  public void onSuccess(Void unused) {
+                      Log.d("SUCCESS","Document written....");
+                      updateLocation(uid,db);
+                  }
+              }
+            );
+        }
+    public void updateLocation(String uid,FirebaseFirestore db){
+        Map<String,Object> location = new HashMap<>();
+        location.put("latitude",latitude);
+        location.put("longitude",longitude);
+        db.collection("/location").document(uid).set(location)
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Log.d("FAILURE",e.getMessage());
+                }
+            })
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    progressBar.setVisibility(View.GONE);
+                    moveToHome();
+                    Log.d("SUCCESS","Location uploaded...");
+                }
+            }
+        );
+    }
+    public void showToast(String msg){
+        Toast.makeText(Details.this,msg,Toast.LENGTH_SHORT).show();
+    }
+}

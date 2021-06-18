@@ -23,24 +23,12 @@ public class home extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHome2Binding binding;
-    private TextView trackid,mytrackId;
-    private FirebaseAuth mAuth;
-    private Button track;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityHome2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        trackid=findViewById(R.id.textHome);
-//        track = findViewById(R.id.track);
-//
-//        track.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View  v) {
-//                trackId();
-//            }
-//        });
 
         setSupportActionBar(binding.appBarHome2.toolbar);
         binding.appBarHome2.fab.setOnClickListener(new View.OnClickListener() {
@@ -77,10 +65,4 @@ public class home extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-//    private void trackId() {
-//        Intent in= new Intent(home.this,MainActivity.class);
-//        startActivity(in);
-//    }
 }
