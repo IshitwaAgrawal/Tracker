@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.tracker.Details;
 import com.example.tracker.Location;
 import com.example.tracker.R;
 import com.example.tracker.databinding.FragmentHomeBinding;
@@ -22,7 +23,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-    private Intent i;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,10 +37,10 @@ public class HomeFragment extends Fragment {
         track.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveToLocation();
+                Intent i=new Intent(getActivity(), Location.class);
+                startActivity(i);
             }
         });
-
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -56,6 +57,5 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    private void moveToLocation(){
-    }
+
 }
