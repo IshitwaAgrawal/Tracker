@@ -16,9 +16,9 @@ public class HomeViewModel extends ViewModel {
     public HomeViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("1234567890");
-//        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
-//            mText.setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-//        }
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+            mText.setValue(FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+        }
     }
 
     public LiveData<String> getText() {
