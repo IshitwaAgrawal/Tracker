@@ -1,6 +1,7 @@
 package com.example.tracker.ui.home;
 
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.tracker.Details;
 import com.example.tracker.Location;
 import com.example.tracker.R;
 import com.example.tracker.databinding.FragmentHomeBinding;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -38,6 +41,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(getActivity(), Location.class);
+                Intent j = getActivity().getIntent();
+                Address address = (Address) j.getExtras().get("address");
+                i.putExtra("address",address.getAddressLine(0).toString());
                 startActivity(i);
             }
         });

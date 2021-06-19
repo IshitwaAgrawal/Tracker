@@ -6,6 +6,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -39,7 +41,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -53,6 +57,7 @@ public class Details extends AppCompatActivity {
     private double longitude;
     private boolean isGPSEnabled = true;
     private int PERMISSION_ID = 44;
+    private Address address;
     private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
@@ -129,6 +134,7 @@ public class Details extends AppCompatActivity {
 
     private void moveToHome(){
         Intent i = new Intent(Details.this,home.class);
+        i.putExtra("address",address);
         startActivity(i);
     }
 
@@ -155,8 +161,14 @@ public class Details extends AppCompatActivity {
             n.setError("Required");
             n.requestFocus();
         } else {
-            if(isGPSEnabled)
-                updateUserProfile(name,email,Phone);
+            if(isGPSEnabled) {
+                try {
+                    getAddress();
+                }catch (Exception e){
+                    Log.d("ADDRESS ERROR",e.getMessage());
+                }
+                updateUserProfile(name, email, Phone);
+            }
         }
     }
     private void updateUserProfile(String name,String email,String Phone){
@@ -235,6 +247,15 @@ public class Details extends AppCompatActivity {
             if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 getLastLocation();
             }
+        }
+    }
+
+    private void getAddress() throws IOException {
+        Geocoder g = new Geocoder(this);
+        List<Address> l = g.getFromLocation(latitude,longitude,5);
+        this.address = l.get(0);
+        for(Address k:l){
+            System.out.println(k);
         }
     }
 
