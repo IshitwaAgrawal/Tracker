@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     private EditText n,e,otp;
     private Button submit;
-    private TextView forgetPassword;
+
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
@@ -40,24 +40,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        n=findViewById(R.id.num);
-        e=findViewById(R.id.email);
+        n = findViewById(R.id.num);
+        e = findViewById(R.id.email);
         otp = findViewById(R.id.otpEntered);
         progressBar = findViewById(R.id.progressBar);
         submit = findViewById(R.id.Save);
-        forgetPassword = findViewById(R.id.forgetPassword);
+
         mAuth = FirebaseAuth.getInstance();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!flag) check();
+                if (!flag) check();
                 else checkOtp();
-            }
-        });
-        forgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                forg();
             }
         });
     }
