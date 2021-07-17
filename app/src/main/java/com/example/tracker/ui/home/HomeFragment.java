@@ -87,6 +87,8 @@ public class HomeFragment extends Fragment {
                             Log.d("Latitude",location.get("latitude").toString());
                             Log.d("Longitude",location.get("longitude").toString());
                             i.putExtra("address",l.get(0).getAddressLine(0));
+                            i.putExtra("latitude",location.get("latitude").toString());
+                            i.putExtra("longitude",location.get("longitude").toString());
                             startActivity(i);
                         } catch (IOException e) {
                             e.printStackTrace();
