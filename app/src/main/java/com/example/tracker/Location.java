@@ -3,7 +3,9 @@ package com.example.tracker;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,14 +24,19 @@ public String MAPVIEW_BUNDLE_KEY="google_maps_key";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        EditText source = (EditText)findViewById(R.id.start);
+//        EditText source = (EditText)findViewById(R.id.start);
         Intent t = getIntent();
         String address = t.getExtras().getString("address");
         this.latitude = Double.parseDouble(t.getExtras().getString("latitude"));
         this.longitude = Double.parseDouble(t.getExtras().getString("longitude"));
         mapView =findViewById(R.id.mapView);
         initGoogleMap(savedInstanceState);
-        source.setText(address);
+//
+        ListView v=findViewById(R.id.list);
+        String s[]={"X","Y","Z","A","B","C"};
+        s[1]=address;
+        ArrayAdapter a=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,s);
+        v.setAdapter(a);
     }
     private void initGoogleMap(Bundle savedInstanceState){
         // *** IMPORTANT ***

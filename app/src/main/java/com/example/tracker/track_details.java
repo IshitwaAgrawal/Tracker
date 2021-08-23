@@ -8,22 +8,21 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class res_pass extends AppCompatActivity {
+public class track_details extends AppCompatActivity {
     Button b,r;
     EditText e,n;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_res_pass);
-        b=findViewById(R.id.sub);
-        e=findViewById(R.id.otp);
+        setContentView(R.layout.activity_track_details);
+
         n=findViewById(R.id.no);
         r=findViewById(R.id.Save);
     }
     public void back(View v)
     {
-        Intent i=new Intent(res_pass.this,MainActivity.class);
+        Intent i=new Intent(track_details.this,MainActivity.class);
         startActivity(i);
     }
     public void otp(View v) {

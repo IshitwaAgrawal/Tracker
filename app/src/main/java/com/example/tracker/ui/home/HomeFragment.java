@@ -23,6 +23,7 @@ import com.example.tracker.Details;
 import com.example.tracker.Location;
 import com.example.tracker.R;
 import com.example.tracker.databinding.FragmentHomeBinding;
+import com.example.tracker.track_details;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -51,8 +52,17 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         Button track = (Button) root.findViewById(R.id.track);
-        destination_id = (EditText) root.findViewById(R.id.name1);
+        Button track_det = (Button) root.findViewById(R.id.track_det);
 
+        destination_id = (EditText) root.findViewById(R.id.name1);
+        track_det.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i=new Intent(getActivity(), track_details.class);
+                startActivity(i);
+            }
+        });
         track.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

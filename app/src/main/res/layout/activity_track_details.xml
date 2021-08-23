@@ -4,7 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".res_pass">
+    tools:context=".track_details">
+
+    <EditText
+        android:id="@+id/no3"
+        android:layout_width="155dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="232dp"
+        android:background="@drawable/rounded_corners"
+        android:ems="10"
+        android:hint="Time"
+        android:paddingLeft="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/no2" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -26,72 +42,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
-    <TextView
-        android:id="@+id/textProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:fontFamily="cursive"
-        android:text="Reset Password"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
     <EditText
         android:id="@+id/no"
-        android:layout_width="338dp"
-        android:layout_height="67dp"
+        android:layout_width="367dp"
+        android:layout_height="54dp"
         android:layout_marginTop="252dp"
         android:background="@drawable/rounded_corners"
         android:ems="10"
-        android:hint="Phone No."
-        android:inputType="number"
-        android:paddingLeft="10dp"
+        android:hint="Source"
+        android:paddingLeft="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/otp"
-        android:layout_width="338dp"
-        android:layout_height="67dp"
+        android:id="@+id/no2"
+        android:layout_width="367dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_corners"
         android:ems="10"
-        android:hint="Enter OTP"
-        android:inputType="number"
-        android:paddingLeft="10dp"
-        android:visibility="invisible"
+        android:hint="Destination"
+        android:paddingLeft="12dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/no" />
 
     <Button
-
-        android:id="@+id/Save"
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#A19999"
-        android:onClick="otp"
-        android:text="Reset Password"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#fe7062 "
+        android:text="Share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otp" />
+        app:layout_constraintTop_toBottomOf="@+id/no3" />
 
-    <Button
-        android:id="@+id/sub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="#A19999"
-        android:text="Submit"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="410dp"
+        android:layout_height="234dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/otp" />
+        app:srcCompat="@drawable/track" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
