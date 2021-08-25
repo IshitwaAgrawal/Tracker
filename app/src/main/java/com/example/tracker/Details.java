@@ -49,14 +49,13 @@ import java.util.UUID;
 
 public class Details extends AppCompatActivity {
     private EditText n, e, num;
-    private Button submit;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     public String s;
     private double latitude;
     private double longitude;
-    private boolean isGPSEnabled = true;
-    private int PERMISSION_ID = 44;
+    private final boolean isGPSEnabled = true;
+    private final int PERMISSION_ID = 44;
     private Address address;
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -68,7 +67,7 @@ public class Details extends AppCompatActivity {
         e = findViewById(R.id.email1);
         num = findViewById(R.id.num1);
         progressBar = findViewById(R.id.progressBar2);
-        submit = findViewById(R.id.Save_details);
+        Button submit = findViewById(R.id.Save_details);
         mAuth = FirebaseAuth.getInstance();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 

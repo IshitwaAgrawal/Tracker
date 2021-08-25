@@ -3,14 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/activity_details.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/activity_home2.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/activity_location.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/activity_main.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/activity_res_pass.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/content_home2.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/fragment_home.xml" value="0.22554347826086957" />
-        <entry key="..\:/Users/Shubh/Desktop/Tracker/app/src/main/res/layout/listview.xml" value="0.22554347826086957" />
+        <entry key="..\:/Users/ishit/StudioProjects/Tracker/app/src/main/res/layout/activity_details.xml" value="0.26132246376811596" />
+        <entry key="..\:/Users/ishit/StudioProjects/Tracker/app/src/main/res/layout/activity_home2.xml" value="0.26132246376811596" />
+        <entry key="..\:/Users/ishit/StudioProjects/Tracker/app/src/main/res/layout/activity_location.xml" value="0.26132246376811596" />
+        <entry key="..\:/Users/ishit/StudioProjects/Tracker/app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
+        <entry key="..\:/Users/ishit/StudioProjects/Tracker/app/src/main/res/layout/activity_track_details.xml" value="0.26132246376811596" />
       </map>
     </option>
   </component>

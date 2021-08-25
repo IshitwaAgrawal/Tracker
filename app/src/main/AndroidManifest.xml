@@ -38,7 +38,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.Tracker.NoActionBar" />
         <activity android:name=".Details" />
-        <activity android:name=".track_details" />
+        <activity android:name=".TrackDetails" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

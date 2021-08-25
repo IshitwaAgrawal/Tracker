@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".track_details">
+    tools:context=".TrackDetails">
 
     <EditText
-        android:id="@+id/no3"
+        android:id="@+id/time_detail"
         android:layout_width="155dp"
         android:layout_height="54dp"
         android:layout_marginTop="16dp"
@@ -20,14 +20,14 @@
         android:textColorHint="#FFFFFF"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no2" />
+        app:layout_constraintTop_toBottomOf="@+id/destination_detail" />
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="834dp"
         android:layout_height="782dp"
         android:paddingLeft="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/no"
+        app:layout_constraintBottom_toTopOf="@+id/source_detail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_circle_24" />
@@ -45,7 +45,7 @@
 
 
     <EditText
-        android:id="@+id/no"
+        android:id="@+id/source_detail"
         android:layout_width="367dp"
         android:layout_height="54dp"
         android:layout_marginTop="252dp"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/no2"
+        android:id="@+id/destination_detail"
         android:layout_width="367dp"
         android:layout_height="54dp"
         android:layout_marginTop="16dp"
@@ -74,10 +74,10 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no" />
+        app:layout_constraintTop_toBottomOf="@+id/source_detail" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -85,7 +85,7 @@
         android:text="Share"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/no3" />
+        app:layout_constraintTop_toBottomOf="@+id/time_detail" />
 
     <ImageView
         android:id="@+id/imageView8"
