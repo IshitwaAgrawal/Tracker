@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +21,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tracker.Location;
+import com.example.tracker.MainActivity;
 import com.example.tracker.R;
 import com.example.tracker.databinding.FragmentHomeBinding;
 import com.example.tracker.TrackDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,6 +44,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private EditText destination_id;
+    private FirebaseAuth mAuth;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,10 +54,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        mAuth = FirebaseAuth.getInstance();
+
         Button track = (Button) root.findViewById(R.id.track);
         Button track_det = (Button) root.findViewById(R.id.track_det);
+        ImageButton btn = (ImageButton) root.findViewById(R.id.logout);
 
         destination_id = (EditText) root.findViewById(R.id.name1);
+
         track_det.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +83,16 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+
         return root;
     }
 
@@ -98,6 +116,7 @@ public class HomeFragment extends Fragment {
                             i.putExtra("address",l.get(0).getAddressLine(0));
                             i.putExtra("latitude",location.get("latitude").toString());
                             i.putExtra("longitude",location.get("longitude").toString());
+                            i.putExtra("userid",destination_id.toString());
                             startActivity(i);
                         } catch (IOException e) {
                             e.printStackTrace();

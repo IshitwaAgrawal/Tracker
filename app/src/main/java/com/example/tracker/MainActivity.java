@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
                     Intent i = new Intent(MainActivity.this,Details.class);
+
                     startActivity(i);
                 }
                 else {
