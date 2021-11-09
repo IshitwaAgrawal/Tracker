@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,12 +21,17 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class Location extends AppCompatActivity implements OnMapReadyCallback {
 MapView mapView;
@@ -43,7 +49,7 @@ public String MAPVIEW_BUNDLE_KEY="google_maps_key";
         String address = t.getExtras().getString("address");
         this.latitude = Double.parseDouble(t.getExtras().getString("latitude"));
         this.longitude = Double.parseDouble(t.getExtras().getString("longitude"));
-        this.userid = String.valueOf(t.getExtras().getString("userid"));
+        this.userid = t.getExtras().getString("userid");
         mapView =findViewById(R.id.mv);
         initGoogleMap(savedInstanceState);
 
@@ -62,9 +68,7 @@ public String MAPVIEW_BUNDLE_KEY="google_maps_key";
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY);
         }
-
         mapView.onCreate(mapViewBundle);
-
         mapView.getMapAsync(this);
     }
 
@@ -114,32 +118,71 @@ public String MAPVIEW_BUNDLE_KEY="google_maps_key";
 //        }
 //        map.setMyLocationEnabled(true);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("location_details").document(this.userid).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Map<String,Object> data = task.getResult().getData();
-                        Geocoder g = new Geocoder(Location.this);
-                        
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+//        db.collection("location_details").document(this.userid).get()
+//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                        Map<String,Object> data;
+//                        data = task.getResult().getData();
+//                        Log.d("USER DESTINATION",data.get("destination").toString());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("USER_DESTINATION","FAILED");
+//                    }
+//                });
+//        db.collection("location_details").get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if(task.isSuccessful()){
+//                            if(task.getResult()!=null){
+//                                outer:for(QueryDocumentSnapshot snapshot:task.getResult()){
+//                                    Map<String,Object> d = snapshot.getData();
+//                                    for(Object k:d.values()){
+//
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//                    }
+//                });
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("location_details").document(this.userid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("GOT DATA", "DocumentSnapshot data: " + document.getData());
+                    } else {
+                        Log.d("GOT DATA", "No such document");
                     }
-                });
+                } else {
+                    Log.d("GOT DATA", "get failed with ", task.getException());
+                }
+            }
+        });
 
         LatLng coord = new LatLng(latitude,longitude);
         map.addMarker(new MarkerOptions().position(coord)
                 .title("Marker at Target"));
-        Polyline line = map.addPolyline(
-                new PolylineOptions().add(
-                        coord,
-                        new LatLng(79,29)
-                )
-                        .width(5).color(Color.RED));
+//        Polyline line = map.addPolyline(
+//                new PolylineOptions().add(
+//                        coord,
+//                        new LatLng(79,29)
+//                )
+//                        .width(5).color(Color.RED));
 
         map.setMinZoomPreference(13.0f);
 
